@@ -47,16 +47,19 @@ public:
 	// The possible returns are: 1, 2, 3, 4, 5, 6, 7, 10, 11 and 12
 	int get_rank() const;
 
+	// Gets the value of a card in the game
+	int get_value() const;
+
 	// Compare rank of two cards. E.g: Eight<Jack is true.
 	// Assume Ace is always 1. 
 	// Useful if you want to sort the cards.
 	bool operator < (Card card2) const;
 
+
 private:
 	suit_t suit;
 	rank_t rank;
 };
-
 
 class Hand {
 public:
@@ -64,23 +67,34 @@ public:
 	Hand();
 
 	// You decide what functions you'll need...
+	void add_card();
+	int hand_sum();
+	void get_hand();
 
 private:
-	// You decide what fields you'll need...
+	// a vector of cards contains the hand of cards a player has
+	vector<Card> hand_of_cards;
 };
 
 
 class Player {
 public:
 	// Constructor. 
-	//    Assigns initial amount of money
+	// Assigns initial amount of money
 	Player(int m);
 
-	// You decide what functions you'll need...
+	// subtract the money from a player if he loses
+	int lose_money(int m);
+
+	// add the money for a player if he wins
+	int win_money(int m);
+
+	// get the money a player has
+	int get_money();
 
 private:
 	int money;
-	// You decide what extra fields (if any) you'll need...
+	Hand hand;
 };
 
 #endif
