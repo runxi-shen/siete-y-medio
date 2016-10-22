@@ -50,6 +50,9 @@ public:
 	// Gets the value of a card in the game
 	int get_value() const;
 
+	// show the card on screen
+	void show_card() const;
+
 	// Compare rank of two cards. E.g: Eight<Jack is true.
 	// Assume Ace is always 1. 
 	// Useful if you want to sort the cards.
@@ -66,10 +69,12 @@ public:
 	// A vector of Cards
 	Hand();
 
-	// You decide what functions you'll need...
-	void add_card();
+	// add a card to a hand
+	Card add_card();
+	// get the sum of values of all cards in a hand
 	int hand_sum();
-	void get_hand();
+	// show all the cards in a hand
+	void show_hand();
 
 private:
 	// a vector of cards contains the hand of cards a player has
@@ -91,6 +96,9 @@ public:
 
 	// get the money a player has
 	int get_money();
+
+	// get the hand of cards
+	Hand get_hand();
 
 private:
 	int money;

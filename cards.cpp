@@ -182,6 +182,11 @@ int Card::get_value() const {
 		return this.get_rank();
 }
 
+// show the card on screen
+void Card::show_card() {
+	cout << "\t" << this.get_spanish_rank() << " de " << this.get_spanish_rank() << "\t" << "(" << this.get_english_rank() << " of " << this.get_english_suit() << ")" << endl;
+}
+
 
 // Comparison operator for cards
 // Returns TRUE if card1 < card2
@@ -202,7 +207,9 @@ Hand::Hand() {}
 
 // add a card to a player's hand
 Hand::add_card() {
-	hand_of_cards.push_back(Card());
+	Card new_card = Card();
+	hand_of_cards.push_back(new_card);
+	return new_card;
 }
 
 // count the values of cards in a player's hand
@@ -214,9 +221,9 @@ Hand::hand_sum() {
 	return sum;
 }
 
-Hand::get_hand() {
+Hand::show_hand() {
 	for (auto const& i : hand_of_cards) {
-		cout << "\t" << i.get_english_rank << " de " << i.get_spanish_suit << "\t" << "(" << i.get_english_rank << " of " << i.get_english_suit << ")" << endl;
+		i.show_card();
 	}
 }
 
@@ -242,6 +249,11 @@ Player::get_money() {
 Player::lose_money(int m) {
 	money -= m;
 	return money;
+}
+
+// get the hand of cards
+Player::get_hand() {
+	return hand;
 }
 
 // add the money a player wins

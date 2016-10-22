@@ -10,8 +10,28 @@ using namespace std;
 // Global constants (if any)
 
 // Non member functions declarations (if any)
+void show_gamer_card(Player gamer);
+void show_dealer_card(Player dealer);
+void show_new_card(Card new_card);
 
 // Non member functions implementations (if any)
+void show_gamer_card(Player gamer) {
+	cout << "Your cards:" << endl;
+	gamer.get_hand().show_hand();
+	cout << "Your total is " << gamer.get_hand().hand_sum() << ". " << "Do you want to another card (y/n)?";
+}
+
+void show_dealer_card(Player dealer) {
+	cout << "Dealer's cards:" << endl;
+	dealer.get_hand().show_hand();
+	cout << "The dealer's total is " << dealer.get_hand().hand_sum() << "." << endl;
+ }
+
+void show_new_card(Card new_card) {
+	cout << "New card:" << endl;
+	new_card.show_card();
+	cout << endl;
+}
 
 // Stub for main
 int main() {
@@ -22,23 +42,45 @@ int main() {
 		cout << "You have $" << gamer.get_money() << "." << " Enter bet: ";
 		int bet;
 		cin << bet;
-		gamer.hand.add_hand();
-		cout << "Your cards:" << endl;
-		cout << "Your total is " << gamer.hand.hand_sum() << ". " << "Do you want to another card (y/n)?";
-		// need some modification
+		Card first_gamer_card = gamer.get_hand().add_card();
+		Card first_dealer_card = dealer.get_hand().add_card();
+		show_gamer_card(gamer);
 		string bool;
 		cin << bool;
-		if (bool == "n") {
-
+		while (bool == "y") {
+			Card new_card = gamer.get_hand().add_card();
+			show_new_card(new_card);
+			show_gamer_card;
+			cin << bool;
 		}
-		else if (bool == "y") {
-
+		if (bool == "n") {
+			while (dealer.get_hand().hand_sum() < 7.5) {
+				show_dealer_card(dealer);
+				Card new_card = dealer.get_hand().add_card();
+				show_new_card(new_card);
+				cout << endl;
+			}
+			if (gamer.get_hand().hand_sum() <= 7.5 && dealer.get_hand().hand_sum()) {
+				if (gamer.get_hand().hand_sum() > dealer.get_hand().hand_sum()) {
+					gamer.win_money(bet);
+					cout << "You win " << bet << "." << endl;
+					cout << endl;
+				}
+				else if (gamer.get_hand().hand_sum() < dealer.get_hand().hand_sum()) {
+					gamer.lose_money(bet);
+					cout << "Too bad. You lose " << bet << endl;
+					cout << endl;
+				}
+			}
 		}
 		else {
-			cout << "Please provide the correct input. Try again (y/n): ";
+			cout << "Please provide the correct input.";
+			return 1;
 		}
-
-
 	}
+	cout << "You have $0. GAME OVER!" << endl;
+	cout << "Come back when you have more money." << endl;
+	cout << "Bye!" << endl;
+
 	return 0;
 }
