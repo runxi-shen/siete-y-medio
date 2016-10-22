@@ -41,26 +41,28 @@ int main() {
 	while (gamer.get_money() > 0 && gamer.get_money() < 1000) {
 		cout << "You have $" << gamer.get_money() << "." << " Enter bet: ";
 		int bet;
-		cin << bet;
+		cin >> bet;
+		cin.ignore(10000, '\n');
 		Card first_gamer_card = gamer.get_hand().add_card();
 		Card first_dealer_card = dealer.get_hand().add_card();
 		show_gamer_card(gamer);
-		string bool;
-		cin << bool;
-		while (bool == "y") {
+		string boolean;
+		getline(cin, boolean);
+		while (boolean == "y") {
 			Card new_card = gamer.get_hand().add_card();
 			show_new_card(new_card);
-			show_gamer_card;
-			cin << bool;
+			show_gamer_card(gamer);
+			getline(cin, boolean);
 		}
-		if (bool == "n") {
-			while (dealer.get_hand().hand_sum() < 7.5) {
+		if (boolean == "n") {
+			while (dealer.get_hand().hand_sum() < 7) {
 				show_dealer_card(dealer);
+				cout << endl;
 				Card new_card = dealer.get_hand().add_card();
 				show_new_card(new_card);
 				cout << endl;
 			}
-			if (gamer.get_hand().hand_sum() <= 7.5 && dealer.get_hand().hand_sum()) {
+			if (gamer.get_hand().hand_sum() <= 7.5 && dealer.get_hand().hand_sum() <= 7.5) {
 				if (gamer.get_hand().hand_sum() > dealer.get_hand().hand_sum()) {
 					gamer.win_money(bet);
 					cout << "You win " << bet << "." << endl;
@@ -71,6 +73,22 @@ int main() {
 					cout << "Too bad. You lose " << bet << endl;
 					cout << endl;
 				}
+				else {
+					cout << "Nobody wins." << endl << endl;
+				}
+			}
+			else if (gamer.get_hand().hand_sum() > 7.5 && dealer.get_hand().hand_sum() <= 7.5) {
+				gamer.lose_money(bet);
+				cout << "You lose by busting" << endl;
+				cout << endl;
+			}
+			else if (gamer.get_hand().hand_sum() <= 7.5 && dealer.get_hand().hand_sum() > 7.5) {
+				gamer.win_money(bet);
+				cout << "Dealer loses by busting" << endl;
+				cout << endl;
+			}
+			else {
+				cout << "Noboday wins. Both busted." << endl;
 			}
 		}
 		else {

@@ -48,7 +48,7 @@ public:
 	int get_rank() const;
 
 	// Gets the value of a card in the game
-	int get_value() const;
+	double get_value() const;
 
 	// show the card on screen
 	void show_card() const;
@@ -72,9 +72,9 @@ public:
 	// add a card to a hand
 	Card add_card();
 	// get the sum of values of all cards in a hand
-	int hand_sum();
+	double hand_sum();
 	// show all the cards in a hand
-	void show_hand();
+	void show_hand() const;
 
 private:
 	// a vector of cards contains the hand of cards a player has
@@ -95,10 +95,10 @@ public:
 	int win_money(int m);
 
 	// get the money a player has
-	int get_money();
+	int& get_money();
 
 	// get the hand of cards
-	Hand get_hand();
+	Hand& get_hand();
 
 private:
 	int money;

@@ -175,16 +175,16 @@ int Card::get_rank() const {
 }
 
 // Gets the value of a card
-int Card::get_value() const {
-	if (rank == "Sota" || rank == "Caballo" || rank == "Rey")
+double Card::get_value() const {
+	if (this->get_spanish_rank() == "Sota" || this->get_spanish_rank() == "Caballo" || this->get_spanish_rank() == "Rey")
 		return 0.5;
 	else
-		return this.get_rank();
+		return this->get_rank();
 }
 
 // show the card on screen
-void Card::show_card() {
-	cout << "\t" << this.get_spanish_rank() << " de " << this.get_spanish_rank() << "\t" << "(" << this.get_english_rank() << " of " << this.get_english_suit() << ")" << endl;
+void Card::show_card() const {
+	cout << "\t" << this->get_spanish_rank() << " de " << this->get_spanish_rank() << "\t" << "(" << this->get_english_rank() << " of " << this->get_english_suit() << ")" << endl;
 }
 
 
@@ -206,22 +206,23 @@ his or her hand.
 Hand::Hand() {}
 
 // add a card to a player's hand
-Hand::add_card() {
+Card Hand::add_card() {
 	Card new_card = Card();
 	hand_of_cards.push_back(new_card);
 	return new_card;
 }
 
 // count the values of cards in a player's hand
-Hand::hand_sum() {
-	int sum = 0;
+double Hand::hand_sum() {
+	double sum = 0;
 	for (auto const& i : hand_of_cards) {
-		sum += i.get_rank;
+		sum += i.get_value();
 	}
 	return sum;
 }
 
-Hand::show_hand() {
+// print out the cards in a hand
+void Hand::show_hand() const{
 	for (auto const& i : hand_of_cards) {
 		i.show_card();
 	}
@@ -241,23 +242,23 @@ Player::Player(int m) {
 }
 
 // get the money a player owns
-Player::get_money() {
+int& Player::get_money() {
 	return money;
 }
 
 // subtract the money a player loses
-Player::lose_money(int m) {
+int Player::lose_money(int m) {
 	money -= m;
 	return money;
 }
 
 // get the hand of cards
-Player::get_hand() {
+Hand& Player::get_hand() {
 	return hand;
 }
 
 // add the money a player wins
-Player::win_money(int m) {
+int Player::win_money(int m) {
 	money += m;
 	return money;
 }
