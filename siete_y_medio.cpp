@@ -10,21 +10,21 @@ using namespace std;
 // Global constants (if any)
 
 // Non member functions declarations (if any)
-void show_gamer_card(Player gamer);
+void show_gamer_card(Hand gamer_hand);
 void show_dealer_card(Player dealer);
 void show_new_card(Card new_card);
 
 // Non member functions implementations (if any)
-void show_gamer_card(Player gamer) {
+void show_gamer_card(Hand gamer_hand) {
 	cout << "Your cards:" << endl;
-	gamer.get_hand().show_hand();
-	cout << "Your total is " << gamer.get_hand().hand_sum() << ". " << "Do you want to another card (y/n)?";
+	gamer_hand.show_hand();
+	cout << "Your total is " << gamer_hand.hand_sum() << ". " << "Do you want to another card (y/n)?";
 }
 
-void show_dealer_card(Player dealer) {
+void show_dealer_card(Hand dealer_hand) {
 	cout << "Dealer's cards:" << endl;
-	dealer.get_hand().show_hand();
-	cout << "The dealer's total is " << dealer.get_hand().hand_sum() << "." << endl;
+	dealer_hand.show_hand();
+	cout << "The dealer's total is " << dealer_hand.hand_sum() << "." << endl;
  }
 
 void show_new_card(Card new_card) {
@@ -43,32 +43,37 @@ int main() {
 		int bet;
 		cin >> bet;
 		cin.ignore(10000, '\n');
-		Card first_gamer_card = gamer.get_hand().add_card();
-		Card first_dealer_card = dealer.get_hand().add_card();
-		show_gamer_card(gamer);
+
+		// create a hand for both dealer and player
+		Hand gamer_hand = Hand();
+		Hand dealer_hand = Hand();
+
+		Card first_gamer_card = gamer_hand.add_card();
+		Card first_dealer_card = dealer_hand.add_card();
+		show_gamer_card(gamer_hand);
 		string boolean;
 		getline(cin, boolean);
 		while (boolean == "y") {
-			Card new_card = gamer.get_hand().add_card();
+			Card new_card = gamer_hand.add_card();
 			show_new_card(new_card);
-			show_gamer_card(gamer);
+			show_gamer_card(gamer_hand);
 			getline(cin, boolean);
 		}
 		if (boolean == "n") {
-			while (dealer.get_hand().hand_sum() < 7) {
-				show_dealer_card(dealer);
+			while (dealer_hand.hand_sum() < 5) {
+				show_dealer_card(dealer_hand);
 				cout << endl;
-				Card new_card = dealer.get_hand().add_card();
+				Card new_card = dealer_hand.add_card();
 				show_new_card(new_card);
 				cout << endl;
 			}
-			if (gamer.get_hand().hand_sum() <= 7.5 && dealer.get_hand().hand_sum() <= 7.5) {
-				if (gamer.get_hand().hand_sum() > dealer.get_hand().hand_sum()) {
+			if (gamer_hand.hand_sum() <= 7.5 && dealer_hand.hand_sum() <= 7.5) {
+				if (gamer_hand.hand_sum() > dealer_hand.hand_sum()) {
 					gamer.win_money(bet);
 					cout << "You win " << bet << "." << endl;
 					cout << endl;
 				}
-				else if (gamer.get_hand().hand_sum() < dealer.get_hand().hand_sum()) {
+				else if (gamer_hand.hand_sum() < dealer_hand.hand_sum()) {
 					gamer.lose_money(bet);
 					cout << "Too bad. You lose " << bet << endl;
 					cout << endl;
@@ -77,12 +82,12 @@ int main() {
 					cout << "Nobody wins." << endl << endl;
 				}
 			}
-			else if (gamer.get_hand().hand_sum() > 7.5 && dealer.get_hand().hand_sum() <= 7.5) {
+			else if (gamer_hand.hand_sum() > 7.5 && dealer_hand.hand_sum() <= 7.5) {
 				gamer.lose_money(bet);
 				cout << "You lose by busting" << endl;
 				cout << endl;
 			}
-			else if (gamer.get_hand().hand_sum() <= 7.5 && dealer.get_hand().hand_sum() > 7.5) {
+			else if (gamer_hand.hand_sum() <= 7.5 && dealer_hand.hand_sum() > 7.5) {
 				gamer.win_money(bet);
 				cout << "Dealer loses by busting" << endl;
 				cout << endl;
