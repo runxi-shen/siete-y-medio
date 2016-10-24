@@ -258,7 +258,9 @@ Hand& Player::get_hand() {
 }
 
 // add the money a player wins
-int Player::win_money(int m) {
+// missing int before the declaration of the function
+// An error to be corrected by collaborator
+Player::win_money(int m) {
 	money += m;
 	return money;
 }
