@@ -97,12 +97,8 @@ public:
 	// get the money a player has
 	int& get_money();
 
-	// get the hand of cards
-	Hand& get_hand();
-
 private:
 	int money;
-	Hand hand;
 };
 
 #endif

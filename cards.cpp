@@ -238,7 +238,6 @@ money a player gets at first.
 */
 Player::Player(int m) {
 	money = m;
-	hand = Hand();
 }
 
 // get the money a player owns
@@ -250,11 +249,6 @@ int& Player::get_money() {
 int Player::lose_money(int m) {
 	money -= m;
 	return money;
-}
-
-// get the hand of cards
-Hand& Player::get_hand() {
-	return hand;
 }
 
 // add the money a player wins
