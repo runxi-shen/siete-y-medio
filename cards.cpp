@@ -106,19 +106,66 @@ string Card::get_spanish_rank() const {
 }
 
 
-
 // Accessor: returns a string with the suit of the card in English 
 // This is just a stub! Modify it to your liking.
 string Card::get_english_suit() const {
-	return "";
+	string suit_in_english;
+	switch (suit) {
+	case OROS:
+		suit_in_english = "golds";
+		break;
+	case COPAS:
+		suit_in_english = "cups";
+		break;
+	case ESPADAS:
+		suit_in_english = "swords";
+		break;
+	case BASTOS:
+		suit_in_english = "clubs";
+		break;
+	default: break;
+	}
+	return suit_in_english;
 }
 
 // Accessor: returns a string with the rank of the card in English 
-// This is just a stub! Modify it to your liking.
 string Card::get_english_rank() const {
-	return "";
+	string rank_in_english;
+	switch (rank) {
+	case AS:
+		rank_in_english = "One";
+		break;
+	case DOS:
+		rank_in_english = "Two";
+		break;
+	case TRES:
+		rank_in_english = "Three";
+		break;
+	case CUATRO:
+		rank_in_english = "Four";
+		break;
+	case CINCO:
+		rank_in_english = "Five";
+		break;
+	case SEIS:
+		rank_in_english = "Six";
+		break;
+	case SIETE:
+		rank_in_english = "Seven";
+		break;
+	case SOTA:
+		rank_in_english = "Jack";
+		break;
+	case CABALLO:
+		rank_in_english = "Queen";
+		break;
+	case REY:
+		rank_in_english = "King";
+		break;
+	default: break;
+	}
+	return rank_in_english;
 }
-
 
 
 // Assigns a numerical value to card based on rank.
@@ -127,22 +174,91 @@ int Card::get_rank() const {
 	return static_cast<int>(rank) + 1;
 }
 
+// Gets the value of a card
+double Card::get_value() const {
+	if (this->get_spanish_rank() == "Sota" || this->get_spanish_rank() == "Caballo" || this->get_spanish_rank() == "Rey")
+		return 0.5;
+	else
+		return this->get_rank();
+}
+
+// show the card on screen
+void Card::show_card() const {
+	cout << "\t" << this->get_spanish_rank() << " de " << this->get_spanish_rank() << "\t" << "(" << this->get_english_rank() << " of " << this->get_english_suit() << ")" << endl;
+}
+
+
 // Comparison operator for cards
 // Returns TRUE if card1 < card2
 bool Card::operator < (Card card2) const {
 	return rank < card2.rank;
 }
 
-
-
 /* *************************************************
 Hand class
 ************************************************* */
-// Implemente the member functions of the Hand class here.
 
+/*
+Default constructor for the Card class.
+It could give the cards a player has in 
+his or her hand.
+*/
+Hand::Hand() {}
 
+// add a card to a player's hand
+Card Hand::add_card() {
+	Card new_card = Card();
+	hand_of_cards.push_back(new_card);
+	return new_card;
+}
+
+// count the values of cards in a player's hand
+double Hand::hand_sum() {
+	double sum = 0;
+	for (auto const& i : hand_of_cards) {
+		sum += i.get_value();
+	}
+	return sum;
+}
+
+// print out the cards in a hand
+void Hand::show_hand() const{
+	for (auto const& i : hand_of_cards) {
+		i.show_card();
+	}
+}
 
 /* *************************************************
 Player class
 ************************************************* */
-// Implemente the member functions of the Player class here.
+/*
+Default constructor for the Player class.
+It initializes the hand of cards and the 
+money a player gets at first.
+*/
+Player::Player(int m) {
+	money = m;
+	hand = Hand();
+}
+
+// get the money a player owns
+int& Player::get_money() {
+	return money;
+}
+
+// subtract the money a player loses
+int Player::lose_money(int m) {
+	money -= m;
+	return money;
+}
+
+// get the hand of cards
+Hand& Player::get_hand() {
+	return hand;
+}
+
+// add the money a player wins
+int Player::win_money(int m) {
+	money += m;
+	return money;
+}
